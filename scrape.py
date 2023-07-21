@@ -7,7 +7,7 @@ import csv
 import os
 
 # Opens link from the file to read the link
-# Old link will be stored on its own if the scraping gets interupted
+# Old link will be stored on its own if the scraping gets interrupted
 # Can be used to resume where scraping was left of
 with open("next_button_url.txt", "r") as txt_file:
     URL = txt_file.read().strip()
@@ -69,7 +69,6 @@ def copy_jobs(selected_jobs, file_writer):
             meta_data = convert_list_to_str(meta_data_list)
             print("Title:", trimmed_job_title)
             print("Company:", company_name.text)
-            # print("Apply Link:", apply_link)
             print("Indeed Link", indeed_url)
             print("Job description", job_description)
             print("Meta data", meta_data)
