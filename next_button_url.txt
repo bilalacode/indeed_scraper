@@ -1,1 +1,1 @@
-https://www.indeed.com/jobs?q=react&sc=0kf%3Aattr%28DSQF7%29jt%28contract%29%3B&start=10
+https://www.indeed.com/jobs?q=front+end+developer&start=20
