@@ -4,6 +4,7 @@ import subprocess
 
 next_page_file = "next_button_url.txt"
 
+
 # Loop until the next_page file is not marked as "DONE"
 while True:
     # Run the scrapper.py script using subprocess

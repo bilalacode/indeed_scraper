@@ -6,16 +6,16 @@ import undetected_chromedriver as uc
 import csv
 import os
 
-#Opens link from the file to read the link
-#Old link will be stored on its own if the scraping gets interupted 
-#Can be used to resume where scraping was left of
+# Opens link from the file to read the link
+# Old link will be stored on its own if the scraping gets interupted
+# Can be used to resume where scraping was left of
 with open("next_button_url.txt", "r") as txt_file:
     URL = txt_file.read().strip()
 driver = uc.Chrome()
 driver.get(URL)
 
 
-#if selinium gets a list instead of an element, this fuction can be used to sanitize it
+# if selenium gets a list instead of an element, this function can be used to sanitize it
 def convert_list_to_str(list_to_convert):
     converted_text = ""
     for elem in list_to_convert:
@@ -25,15 +25,15 @@ def convert_list_to_str(list_to_convert):
     return converted_text
 
 
-#main element where jobs are listed on indeed.com
+# main element where jobs are listed on indeed.com
 def get_main():
     element = driver.find_element(By.ID, "mosaic-jobResults")
     jobs = element.find_elements(By.CLASS_NAME, "cardOutline")
     return jobs
 
 
-#writes the next page url. file is saved and new instance is launched for each new link
-#to avoid Cloudflares proxy triggering
+# writes the next page url. file is saved and new instance is launched for each new link
+# to avoid Cloudflare proxy triggering
 def write_next_page_url():
     try:
         pagination_next = driver.find_element(By.XPATH, "//a[contains(@aria-label, 'Next Page')]")
@@ -44,11 +44,11 @@ def write_next_page_url():
         print("Error", e)
         print("No more jobs for this term are left to scrape")
         with open("next_button_url.txt", "w") as txt_file_to_save:
-            #DONE is used to tell the main.py that the job is finished scraping
+            # DONE is used to tell the main.py that the job is finished scraping
             txt_file_to_save.write("DONE")
 
 
-#main scraping logic is handled by this function
+# main scraping logic is handled by this function
 def copy_jobs(selected_jobs, file_writer):
     for job in selected_jobs:
         job.click()
@@ -63,8 +63,6 @@ def copy_jobs(selected_jobs, file_writer):
             trimmed_job_title = job_title.replace("- job post", "").strip()
             company_name = driver.find_element(By.CLASS_NAME, "css-1saizt3")
 
-            # apply_button = driver.find_element(By.CLASS_NAME, "eu4oa1w0")
-            # apply_link = apply_button.get_attribute("href")
             indeed_url = driver.current_url
             job_description = driver.find_element(By.CLASS_NAME, "jobsearch-BodyContainer").text
             meta_data_list = job.find_elements(By.CLASS_NAME, "metadata")
@@ -76,7 +74,6 @@ def copy_jobs(selected_jobs, file_writer):
             print("Job description", job_description)
             print("Meta data", meta_data)
 
-            # file_writer.writerow([trimmed_job_title, company_name.text, apply_link, indeed_url, job_description, meta_data])
             file_writer.writerow([trimmed_job_title, company_name.text, indeed_url, job_description, meta_data])
             write_next_page_url()
 
@@ -94,12 +91,10 @@ with open(csv_file, mode="a", newline="", encoding="utf-8") as file:
 
     # Write header if the file doesn't exist
     if not file_exists:
-        # writer.writerow(["Title", "Company", "Apply Link", "Indeed Link", "Job Description", "Meta Data"])
         writer.writerow(["Title", "Company", "Indeed Link", "Job Description", "Meta Data"])
 
     # Execute the job copying and writing
     copy_jobs(get_main(), writer)
-
 
 # The file will be closed automatically after exiting the 'with' block
 driver.close()
