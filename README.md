@@ -26,30 +26,29 @@ pip install selenium undetected-chromedriver csv
 1. Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/indeed-job-scraper.git
+git clone https://github.com/bilalacode/indeed-job-scraper.git
 cd indeed-job-scraper
 ```
 
-2. Set up the `next_button_url.txt` file with the initial URL you want to scrape job listings from.
+2. Download ChromeDriver and place it in the project directory [Note: This program is optimized for Windows. There are comments where subprocesses are used. If you want to use this for Unix-like systems, please change those. Also, download the chrome-drvier suitable for your system].
 
-3. Download ChromeDriver and place it in the project directory.
-
-4. Run the main script to start scraping job listings:
+3. Run the main script to start scraping job listings:
 
 ```bash
 python main.py
 ```
+
+4. You can either scrape for a single indeed job search by providing a link. Alternatively, you can edit the generate_links.py to scrape multiple search terms with multiple states.
 
 The script will open Chrome with the provided URL and start extracting job details. It will then save the data to `job_details.csv`.
 
 ## Project Structure
 
 - `main.py`: The main script that performs web scraping and saves data to CSV.
-- `scrapper.py`: The helper script containing the scraping logic and functions.
-- `next_button_url.txt`: Text file to store the URL for the next page.
-- `job_details.csv`: CSV file to store the extracted job details.
+- `scrapper.py, generate_links.py, signle_download.py, batch_download.py`: The helper script containing the scraping logic and functions.
 - `LICENSE`: The GPL v3 license file.
 - `README.md`: This file.
+- Some other files will be generated based on the options selected. (e.g `job_details.csv, apply_links.json`)
 
 ## License
 

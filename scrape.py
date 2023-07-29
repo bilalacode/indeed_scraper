@@ -27,9 +27,13 @@ def convert_list_to_str(list_to_convert):
 
 # main element where jobs are listed on indeed.com
 def get_main():
-    element = driver.find_element(By.ID, "mosaic-jobResults")
-    jobs = element.find_elements(By.CLASS_NAME, "cardOutline")
-    return jobs
+    try:
+        element = driver.find_element(By.ID, "mosaic-jobResults")
+        jobs = element.find_elements(By.CLASS_NAME, "cardOutline")
+        return jobs
+    except Exception as a:
+        print(a)
+        write_next_page_url()
 
 
 # writes the next page url. file is saved and new instance is launched for each new link
@@ -78,6 +82,7 @@ def copy_jobs(selected_jobs, file_writer):
 
         except Exception as e:
             print("Error:", e)
+            write_next_page_url()
 
 
 # Check if the CSV file exists
